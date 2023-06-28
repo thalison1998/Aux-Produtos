@@ -27,4 +27,13 @@ public class RegistroFinanceiroController : Controller
         var registroFinanceiro = await _registroFinanceiroAppService.Criar(request);
         return Ok(registroFinanceiro);
     }
+
+    [HttpGet]
+    [SwaggerResponse((int)HttpStatusCode.OK, "", typeof(RegistroFinanceiroResponse))]
+    [SwaggerOperation(Summary = "Obtém registro financeiro por id")]
+    public async Task<IActionResult> ObterPorId([FromQuery] Guid id)
+    {
+        var registroFinanceiro = await _registroFinanceiroAppService.ObterPorId(id);
+        return Ok(registroFinanceiro);
+    }
 }

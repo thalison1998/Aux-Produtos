@@ -28,9 +28,9 @@ public class OperacaoController : Controller
         return Ok(registroFinanceiro);
     }
 
-    [HttpPut]
+    [HttpGet]
     [SwaggerResponse((int)HttpStatusCode.OK, "", typeof(Operacao))]
-    [SwaggerOperation(Summary = "Obtém operação ")]
+    [SwaggerOperation(Summary = "Obtém operação por id ")]
     public async Task<IActionResult> ObterPorId([FromBody] Guid Id)
     {
         var registroFinanceiro = await _operacaoAppService.ObterPorId(Id);

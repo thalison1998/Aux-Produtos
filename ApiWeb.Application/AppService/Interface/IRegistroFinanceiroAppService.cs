@@ -9,4 +9,5 @@ public interface IRegistroFinanceiroAppService
 {
     Task<RegistroFinanceiroResponse> Criar(CriarRegistroFinanceiroRequest request);
     void AtualizarValorTotalRegistroFinanceiro(Operacao operacao, RegistroFinanceiro registroFinanceiro);
+    Task<RegistroFinanceiroResponse> ObterPorId(Guid id);
 }

@@ -57,7 +57,7 @@ public class RegistroFinanceiroAppService : IRegistroFinanceiroAppService
 
         AtribuicaoDeValorPositivoNegativos(factory, request, registroFinanceiro);
 
-         registroFinanceiro = _registroFinanceiroRepository.Adicionar(registroFinanceiro);
+        registroFinanceiro = _registroFinanceiroRepository.Adicionar(registroFinanceiro);
 
         await _unitOfWork.CommitAsync();
 
@@ -66,5 +66,10 @@ public class RegistroFinanceiroAppService : IRegistroFinanceiroAppService
         return registroFinanceiroMapeado;
     }
 
-    public async Task<RegistroFinanceiroResponse>
+    public async Task<RegistroFinanceiroResponse> ObterPorId(Guid id)
+    {
+        var registroFinanceiroMapeado = await _registroFinanceiroRepository.ObterPorIdComOperacaoAsync(id);
+
+        return _mapper.Map<RegistroFinanceiroResponse>(registroFinanceiroMapeado);
+    }
 }
