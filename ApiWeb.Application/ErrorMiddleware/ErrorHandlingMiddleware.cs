@@ -37,8 +37,10 @@ public class ErrorHandlingMiddleware : IMiddleware
                         Detail = "Um ou mais erros de validação ocorreram.",
                         Instance = context.Request.Path,
                     };
+                    
+                    problemDetails.Extensions.Add("errors", errors);
                     break;
-                    default:
+                default:
                     problemDetails = new ProblemDetails()
                     {
                         Status = (int)HttpStatusCode.InternalServerError,

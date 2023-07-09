@@ -6,12 +6,11 @@ using ApiWeb.Domain.Interfaces.IRepository;
 using ApiWeb.Infra.Data;
 using ApiWeb.Infra.Data.Context;
 using ApiWeb.Infra.Data.Repository;
-using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using static ApiWeb.Application.Validadores.Validadores;
 
 namespace ApiWeb.Infra.CrossCutting.IoC;
 
@@ -22,27 +21,32 @@ public static class InjetorDeDependencias
         services.AddScoped<ErrorHandlingMiddleware>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddAutoMapper(typeof(AutoMapperConfig));
-        services.AddFluentValidationAutoValidation();
-        services.AddFluentValidationClientsideAdapters();
-        services.AddValidatorsFromAssemblyContaining<Validadores>();
 
         return services
             .InjetarDbContext(configuration, loggerFactory)
             .InjetarAppServices()
             .InjetarRepository();
+            //.InjetarValidadores();
+
     }
+
+    //private static IServiceCollection InjetarValidadores(this IServiceCollection services)
+    //{
+    //    services.AddTransient<IValidator<CriarOperacaoRequest>, CriarOperacaoValidator>();
+    //    return services;
+    //}
+
 
     private static IServiceCollection InjetarAppServices(this IServiceCollection services)
     {
-        services.AddScoped<IOperacaoAppService, OperacaoAppService>();
-        services.AddScoped<IRegistroFinanceiroAppService, RegistroFinanceiroAppService>();
+        services.AddScoped<IProdutoAppService,ProdutoAppService>();
+
         return services;
     }
 
     private static IServiceCollection InjetarRepository(this IServiceCollection services)
     {
-        services.AddScoped<IOperacaoRepository, OperacaoRepository>();
-        services.AddScoped<IRegistroFinanceiroRepository, RegistroFinanceiroRepository>();
+        services.AddScoped<IProdutoRepository, ProdutoRepository>();
         return services;
     }
     private static IServiceCollection InjetarDbContext(this IServiceCollection services, IConfiguration configuration, ILoggerFactory loggerFactory)

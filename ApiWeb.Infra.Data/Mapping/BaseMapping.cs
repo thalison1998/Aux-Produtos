@@ -12,5 +12,7 @@ public abstract class BaseMapping<TEntity> : IEntityTypeConfiguration<TEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.DataCriacao).HasColumnType("timestamp");
+        builder.Property(x => x.Codigo).ValueGeneratedOnAdd();
+
     }
 }
