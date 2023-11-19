@@ -1,4 +1,4 @@
-﻿using ApiWeb.Domain.Entidades;
+﻿using ApiWeb.Domain.Domains;
 
 namespace ApiWeb.Domain.Interfaces.IRepository;
 
@@ -8,5 +8,5 @@ public interface IBaseRepository<TEntity> : IDisposable where TEntity : Base
     Task<TEntity> ObterPorIdAsync(Guid id);
     Task<IEnumerable<TEntity>> ObterTodosAsync();
     void Atualizar(TEntity obj);
-    void Remover(TEntity entity);
+    Guid Remover(TEntity entity);
 }

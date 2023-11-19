@@ -2,11 +2,18 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net;
 
 public class ErrorHandlingMiddleware : IMiddleware
 {
+    private readonly ILogger<ErrorHandlingMiddleware> _logger;
+
+    public ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger)
+    {
+        _logger = logger;
+    }
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
@@ -15,6 +22,7 @@ public class ErrorHandlingMiddleware : IMiddleware
         }
         catch (Exception ex)
         {
+
             ProblemDetails problemDetails = null;
 
             switch (ex)
@@ -45,9 +53,12 @@ public class ErrorHandlingMiddleware : IMiddleware
                     {
                         Status = (int)HttpStatusCode.InternalServerError,
                         Title = "Erro interno do servidor",
-                        Detail = ex.InnerException?.Message,
+                        Detail = ex.Message,
                         Instance = context.Request.Path,
                     };
+
+                    _logger.LogError(ex.Message);
+
                     break;
             }
 

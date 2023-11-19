@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 using ApiWeb.Domain.Interfaces.IRepository;
-using ApiWeb.Domain.Entidades;
 using ApiWeb.Infra.Data.Context;
+using ApiWeb.Domain.Domains;
 
 public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : Base
 {
@@ -39,12 +38,13 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
         DbSet.Update(obj);
     }
 
-    public virtual void Remover(TEntity entity)
+    public virtual Guid Remover(TEntity entity)
     {
         if (Db.Entry(entity).State == EntityState.Detached)
             DbSet.Attach(entity);
 
         DbSet.Remove(entity);
+        return entity.Id;
     }
 
     protected virtual IQueryable<TEntity> Obter()

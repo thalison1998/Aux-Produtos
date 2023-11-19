@@ -1,4 +1,4 @@
-﻿using ApiWeb.Domain.Entidades;
+﻿using ApiWeb.Domain.Domains;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -8,7 +8,8 @@ public class WebApiDbContext : DbContext
 {
     public WebApiDbContext(DbContextOptions<WebApiDbContext> options) : base(options) { }
 
-    public DbSet<Produto> Produto{ get; set; }
+    public DbSet<Transacao> Transacao { get; set; }
+    public DbSet<RegistroFinanceiro> RegistroFinanceiro { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

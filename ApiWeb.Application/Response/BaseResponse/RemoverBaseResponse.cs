@@ -2,7 +2,7 @@
 
 public class RemoverBaseResponse : BaseResponse
 {
-    public RemoverBaseResponse(string mensagem, Guid id)
+    public RemoverBaseResponse(string mensagem, Guid? id)
     {
         Mensagem = mensagem;
         Id = id;

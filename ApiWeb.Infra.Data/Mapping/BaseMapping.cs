@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using ApiWeb.Domain.Entidades;
+using ApiWeb.Domain.Domains;
 
 namespace ApiWeb.Infra.Data.Mapping;
 
@@ -13,6 +13,5 @@ public abstract class BaseMapping<TEntity> : IEntityTypeConfiguration<TEntity>
 
         builder.Property(x => x.DataCriacao).HasColumnType("timestamp");
         builder.Property(x => x.Codigo).ValueGeneratedOnAdd();
-
     }
 }

@@ -17,12 +17,12 @@ namespace ApiWeb.Infra.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ApiWeb.Domain.Entidades.Produto", b =>
+            modelBuilder.Entity("ApiWeb.Domain.Domains.RegistroFinanceiro", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,19 +40,75 @@ namespace ApiWeb.Infra.Data.Migrations
                         .HasColumnType("timestamp")
                         .HasColumnName("data_criacao");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("nome");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("numeric")
-                        .HasColumnName("valor");
+                    b.Property<decimal>("ValorTotal")
+                        .HasColumnType("decimal")
+                        .HasColumnName("valor_total");
 
                     b.HasKey("Id")
-                        .HasName("pk_produto");
+                        .HasName("pk_registros_financeiros");
 
-                    b.ToTable("produto", "sistema");
+                    b.ToTable("registros_financeiros", "sistema");
+                });
+
+            modelBuilder.Entity("ApiWeb.Domain.Domains.Transacao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Codigo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("codigo");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Codigo"));
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("data_criacao");
+
+                    b.Property<string>("DescricaoTransacao")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("descricao_transacao");
+
+                    b.Property<Guid>("RegistroFinanceiroId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("registro_financeiro_id");
+
+                    b.Property<int>("TipoTransacaoEnum")
+                        .HasColumnType("integer")
+                        .HasColumnName("tipo_transacao_enum");
+
+                    b.Property<decimal>("ValorTransacao")
+                        .HasColumnType("decimal")
+                        .HasColumnName("valor_transacao");
+
+                    b.HasKey("Id")
+                        .HasName("pk_transacoes");
+
+                    b.HasIndex("RegistroFinanceiroId")
+                        .HasDatabaseName("ix_transacoes_registro_financeiro_id");
+
+                    b.ToTable("transacoes", "sistema");
+                });
+
+            modelBuilder.Entity("ApiWeb.Domain.Domains.Transacao", b =>
+                {
+                    b.HasOne("ApiWeb.Domain.Domains.RegistroFinanceiro", "RegistroFinanceiro")
+                        .WithMany("Transacao")
+                        .HasForeignKey("RegistroFinanceiroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_transacoes_registros_financeiros_registro_financeiro_id");
+
+                    b.Navigation("RegistroFinanceiro");
+                });
+
+            modelBuilder.Entity("ApiWeb.Domain.Domains.RegistroFinanceiro", b =>
+                {
+                    b.Navigation("Transacao");
                 });
 #pragma warning restore 612, 618
         }
