@@ -11,14 +11,16 @@ public class RegistroFinanceiro : Base
     }
 
     public decimal ValorTotal { get; private set; }
-    public virtual List<Transacao> Transacao { get; private set; } = new();
+    public virtual List<Transacao> Transacao { get; private set; }
 
 
     public Transacao AdicionarTransacao(Transacao transacao)
     {
         transacao.LimparId();
 
-        Transacao.Add(transacao);
+        var listraTransacao = Transacao ?? new List<Transacao>();
+
+        listraTransacao.Add(transacao);
 
         AtualizacaoValorTotal(transacao);
 
@@ -27,7 +29,7 @@ public class RegistroFinanceiro : Base
 
     private void AtualizacaoValorTotal(Transacao transacao) 
     { 
-        if(transacao.TipoTransacaoEnum == TipoTransacaoEnum.Entrada)
+        if(transacao.TipoTransacao == TipoTransacaoEnum.Entrada)
         {
             ValorTotal += transacao.ValorTransacao;
         }

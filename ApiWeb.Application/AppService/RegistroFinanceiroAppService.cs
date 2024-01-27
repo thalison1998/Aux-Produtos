@@ -1,5 +1,6 @@
 ﻿using ApiWeb.Application.AppService.Interface;
 using ApiWeb.Application.Request;
+using ApiWeb.Application.Response;
 using ApiWeb.Application.Response.BaseResponse;
 using ApiWeb.Domain.Domains;
 using ApiWeb.Domain.Service.Interface;
@@ -33,5 +34,14 @@ public class RegistroFinanceiroAppService : IRegistroFinanceiroAppService
         BaseResponseFactory adicionarFactory = new AdicionarBaseResponseFactory();
 
         return adicionarFactory.CriarBaseResponse("Registro financeiro adicionado com sucesso.", registroFinanceiroResultado.Id);
+    }
+
+    public async Task<RegistroFinanceiroResponse> ObterRegistroFinanceiroAnoMesAtual()
+    {
+        var registroFinanceiroResultado = await _registroFinanceiroService.ExisteRegistroFinanceiroAnoMesAtual();
+
+        RegistroFinanceiroResponse registroFinanceiro = _mapper.Map<RegistroFinanceiroResponse>(registroFinanceiroResultado);
+
+        return registroFinanceiro;
     }
 }

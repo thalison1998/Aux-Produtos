@@ -6,5 +6,4 @@ public interface IRegistroFinanceiroService
 {
     Task<RegistroFinanceiro> Criar(RegistroFinanceiro registroFinanceiro);
     Task<RegistroFinanceiro> ExisteRegistroFinanceiroAnoMesAtual();
-    //Task<List<RegistroFinanceiro>> ListarTodosRegistrosFinanceiros();
 }

@@ -13,5 +13,7 @@ public class RegistroFinanceiroMapping : BaseMapping<RegistroFinanceiro>
         builder.ToTable("RegistrosFinanceiros", Constantes.Schemas.Sistema);
 
         builder.Property(x => x.ValorTotal).HasColumnType("decimal");
+
+        builder.Navigation(x => x.Transacao).AutoInclude();
     }
 }

@@ -14,8 +14,8 @@ public class CriarTransacaoRequest
     }
 
     public decimal ValorTransacao { get; set; }
-    public TipoTransacaoEnum TipoTransacaoEnum { get; set; }
-    public string DescricaoTransacao { get; set; }
+    public TipoTransacaoEnum TipoTransacao { get; set; }
+    public string? DescricaoTransacao { get; set; }
 
     public bool EhValido() => Validar().IsValid;
     public ValidationResult Validar() => _validator.Validate(this);

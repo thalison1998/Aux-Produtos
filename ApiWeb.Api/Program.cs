@@ -14,13 +14,22 @@ ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
 });
 
 
-
 builder.Services
     .InjetarDependenciasApi(builder.Configuration, loggerFactory)
     .AddAuthentication(builder.Configuration)
     .AddVersioning()
     .AddSwagger();
-   
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 app.UseRouting();
@@ -34,5 +43,7 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors();
 
 app.Run();

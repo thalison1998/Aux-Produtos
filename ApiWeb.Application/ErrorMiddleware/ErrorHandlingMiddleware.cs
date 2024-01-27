@@ -62,18 +62,19 @@ public class ErrorHandlingMiddleware : IMiddleware
                     break;
             }
 
-            await HandleExceptionAsync(context, problemDetails);
+           await HandleExceptionAsync(context, problemDetails);
         }
 
     }
 
-    private Task HandleExceptionAsync(HttpContext context, ProblemDetails ex)
+    private  Task HandleExceptionAsync(HttpContext context, ProblemDetails ex)
     {
         context.Response.StatusCode = (int)ex.Status;
 
         context.Response.ContentType = "application/problem+json";
 
         return context.Response.WriteAsync(JsonConvert.SerializeObject(ex));
+        
     }
 }
 

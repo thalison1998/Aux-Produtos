@@ -6,7 +6,6 @@ namespace ApiWeb.Application.Response;
 public class TransacaoResponse
 {
     public decimal ValorTransacao { get; set; }
-    public RegistroFinanceiro RegistroFinanceiro { get; set; }
     public Guid RegistroFinanceiroId { get; set; }
-    public TipoTransacaoEnum TipoTransacaoEnum { get; set; }
+    public TipoTransacaoEnum TipoTransacao { get; set; }
 }

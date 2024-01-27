@@ -22,13 +22,23 @@ namespace ApiWeb.Api.Controllers
             _registroFinanceiroAppService = registroFinanceiroAppService;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [SwaggerResponse((int)HttpStatusCode.OK, "", typeof(BaseResponse))]
         [SwaggerOperation(Summary = DescricoesSwagger.DescricaoRegistroFinanceiro.Criar)]
         public async Task<IActionResult> Criar([FromBody] CriarRegistroFinanceiroRequest request)
         {
             var registroFinanceiro = await _registroFinanceiroAppService.Criar(request);
+            return Ok(registroFinanceiro);
+        }
+
+        //[Authorize]
+        [HttpGet("obter-mes-ano-atual")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "", typeof(BaseResponse))]
+        [SwaggerOperation(Summary = DescricoesSwagger.DescricaoRegistroFinanceiro.ObterRegistroFinanceiroAnoMesAtual)]
+        public async Task<IActionResult> ObterRegistroFinanceiroAnoMesAtual()
+        {
+            var registroFinanceiro = await _registroFinanceiroAppService.ObterRegistroFinanceiroAnoMesAtual();
             return Ok(registroFinanceiro);
         }
     }

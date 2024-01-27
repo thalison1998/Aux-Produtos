@@ -40,6 +40,13 @@ public class TransacaoService : ITransacaoService
         return transacaoRetorno;
     }
 
+    public async Task<List<Transacao>> ListarTodas()
+    {
+       var listarTransacao = await _transacaoRepository.ObterTodosAsync();
+
+       return listarTransacao.OrderBy(x => x.DataCriacao).ToList();
+    }
+
     public async Task<Guid> Remover(Guid id)
     {
         var transacao = await _transacaoRepository.ObterPorIdAsync(id);
@@ -48,7 +55,6 @@ public class TransacaoService : ITransacaoService
         {
             throw new NotFoundException("Entidade não pode ser encontrada");
         }
-
 
         _transacaoRepository.Remover(transacao);
 

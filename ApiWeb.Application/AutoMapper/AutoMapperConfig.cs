@@ -11,7 +11,9 @@ public class AutoMapperConfig : Profile
     {
         #region RegistroFinanceiro
         CreateMap<RegistroFinanceiro, CriarRegistroFinanceiroRequest>().ReverseMap();
-        CreateMap<RegistroFinanceiro, RegistroFinanceiroResponse>().ReverseMap();
+        CreateMap<RegistroFinanceiro, RegistroFinanceiroResponse>()
+        .ForMember(dest => dest.Transacoes, opt => opt.MapFrom(src => src.Transacao))
+        .ReverseMap();
         #endregion
 
         #region Transacao

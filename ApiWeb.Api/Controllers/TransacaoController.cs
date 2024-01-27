@@ -1,5 +1,6 @@
 ﻿using ApiWeb.Application.AppService.Interface;
 using ApiWeb.Application.Request;
+using ApiWeb.Application.Response;
 using ApiWeb.Domain.Domains;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -27,6 +28,15 @@ public class TransacaoController : Controller
     {
         var transacao = await _transacaoAppService.Criar(request);
         return Ok(transacao);
+    }
+
+    [HttpGet]
+    [SwaggerResponse((int)HttpStatusCode.OK, "", typeof(List<TransacaoResponse>))]
+    [SwaggerOperation(Summary = "Listar transação")]
+    public async Task<IActionResult> listarTodas()
+    {
+        var listarTransacao = await _transacaoAppService.ListarTodas();
+        return Ok(listarTransacao);
     }
 
     [HttpDelete]

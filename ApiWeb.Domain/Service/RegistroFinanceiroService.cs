@@ -27,8 +27,4 @@ public class RegistroFinanceiroService : IRegistroFinanceiroService
 
     public Task<RegistroFinanceiro> ExisteRegistroFinanceiroAnoMesAtual() => _registroFinanceiroRepository.ExisteRegistroFinanceiroAnoMesAtual();
 
-    //public Task<List<RegistroFinanceiro>> ListarTodosRegistrosFinanceiros()
-    //{
-    //    var listaDeRegistrosFinanceiros = _registroFinanceiroRepository.ObterTodosAsync();
-    //}
 }
