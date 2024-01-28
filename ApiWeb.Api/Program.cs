@@ -16,7 +16,7 @@ ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
 
 builder.Services
     .InjetarDependenciasApi(builder.Configuration, loggerFactory)
-    .AddAuthentication(builder.Configuration)
+    //.AddAuthentication(builder.Configuration)
     .AddVersioning()
     .AddSwagger();
 
