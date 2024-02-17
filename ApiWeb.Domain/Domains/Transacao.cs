@@ -8,6 +8,11 @@ public class Transacao : Base
 
     public Transacao(decimal valorTransacao, string descricaoTransacao, Guid registroFinanceiroId, TipoTransacaoEnum tipoTransacao)
     {
+        if (valorTransacao < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(valorTransacao), "O valor da transação não pode ser menor que 0.");
+        }
+
         ValorTransacao = valorTransacao;
         RegistroFinanceiroId = registroFinanceiroId;
         TipoTransacao = tipoTransacao;
